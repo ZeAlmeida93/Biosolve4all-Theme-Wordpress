@@ -57,6 +57,15 @@
 <li><a href="https://biosolve4all.com/home#noticias">Notícias</a></li>
 <li class="btn"><a href="https://biosolve4all.com/home#contactos">Contactos</a></li>
 </ul>
+<?php
+  $lang_pt_url = home_url( '/' );
+  $lang_en_url = home_url( '/en/' );
+?>
+<div aria-label="Language selector" class="language-switcher" data-language-switcher data-lang-url-en="<?php echo esc_url( $lang_en_url ); ?>" data-lang-url-pt="<?php echo esc_url( $lang_pt_url ); ?>">
+<button aria-label="Português" class="lang-option" data-lang="pt" type="button">PT</button>
+<span aria-hidden="true">|</span>
+<button aria-label="English" class="lang-option" data-lang="en" type="button">EN</button>
+</div>
 <div class="mobile-menu">
 <input class="checkbox" id="" name="" type="checkbox"/>
 <div class="hamburger-lines">

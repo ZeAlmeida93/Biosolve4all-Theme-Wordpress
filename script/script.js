@@ -1,3 +1,141 @@
+// Language switcher + geolocation
+document.addEventListener('DOMContentLoaded', function () {
+    const switcher = document.querySelector('[data-language-switcher]');
+    if (!switcher) {
+        return;
+    }
+
+    const storageKey = 'biosolve_lang';
+    const cookieKey = 'biosolve_lang';
+    const ptUrl = switcher.dataset.langUrlPt || '';
+    const enUrl = switcher.dataset.langUrlEn || '';
+    const buttons = switcher.querySelectorAll('[data-lang]');
+
+    const normalizeUrl = (url) => {
+        if (!url) {
+            return null;
+        }
+        try {
+            const parsed = new URL(url, window.location.origin);
+            return parsed.origin + parsed.pathname.replace(/\/+$/, '/');
+        } catch (error) {
+            return null;
+        }
+    };
+
+    const currentPath = window.location.origin + window.location.pathname.replace(/\/+$/, '/');
+    const normalizedEn = normalizeUrl(enUrl);
+    const normalizedPt = normalizeUrl(ptUrl);
+
+    const getCookie = (name) => {
+        const cookieString = document.cookie || '';
+        const match = cookieString.split('; ').find(item => item.startsWith(name + '='));
+        return match ? decodeURIComponent(match.split('=').slice(1).join('=')) : null;
+    };
+
+    const setCookie = (name, value, maxAgeSeconds) => {
+        const maxAge = maxAgeSeconds ? `; max-age=${maxAgeSeconds}` : '';
+        document.cookie = `${name}=${encodeURIComponent(value)}${maxAge}; path=/; SameSite=Lax`;
+    };
+
+    const getStoredLang = () => {
+        try {
+            return localStorage.getItem(storageKey) || getCookie(cookieKey);
+        } catch (error) {
+            return getCookie(cookieKey);
+        }
+    };
+
+    const setStoredLang = (lang) => {
+        try {
+            localStorage.setItem(storageKey, lang);
+        } catch (error) {
+            // Ignore localStorage failures.
+        }
+        setCookie(cookieKey, lang, 60 * 60 * 24 * 365);
+    };
+
+    const getCurrentLang = () => {
+        if (normalizedEn && currentPath.startsWith(normalizedEn)) {
+            return 'en';
+        }
+        if (normalizedPt && currentPath.startsWith(normalizedPt)) {
+            return 'pt';
+        }
+        const docLang = (document.documentElement.lang || '').toLowerCase();
+        if (docLang.startsWith('pt')) {
+            return 'pt';
+        }
+        if (docLang.startsWith('en')) {
+            return 'en';
+        }
+        return null;
+    };
+
+    const setActiveButton = (lang) => {
+        buttons.forEach(button => {
+            const isActive = button.dataset.lang === lang;
+            button.classList.toggle('active', isActive);
+            button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+    };
+
+    const redirectToLang = (lang) => {
+        const targetUrl = lang === 'pt' ? ptUrl : enUrl;
+        const normalizedTarget = normalizeUrl(targetUrl);
+        if (!targetUrl || !normalizedTarget) {
+            return;
+        }
+        if (!currentPath.startsWith(normalizedTarget)) {
+            window.location.href = targetUrl;
+        }
+    };
+
+    const getFallbackLang = () => {
+        const browserLang = (navigator.language || '').toLowerCase();
+        return browserLang.startsWith('pt') ? 'pt' : 'en';
+    };
+
+    const storedLang = getStoredLang();
+    const currentLang = getCurrentLang();
+
+    if (storedLang) {
+        setActiveButton(storedLang);
+        if (storedLang !== currentLang) {
+            redirectToLang(storedLang);
+        }
+    } else {
+        setActiveButton(currentLang || getFallbackLang());
+        fetch('https://ipapi.co/country/', { cache: 'no-store' })
+            .then(response => response.text())
+            .then(countryCode => {
+                const geoLang = countryCode.trim().toUpperCase() === 'PT' ? 'pt' : 'en';
+                setStoredLang(geoLang);
+                setActiveButton(geoLang);
+                if (geoLang !== currentLang) {
+                    redirectToLang(geoLang);
+                }
+            })
+            .catch(() => {
+                const fallbackLang = currentLang || getFallbackLang();
+                setStoredLang(fallbackLang);
+                setActiveButton(fallbackLang);
+            });
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const lang = button.dataset.lang;
+            if (!lang) {
+                return;
+            }
+            setStoredLang(lang);
+            setActiveButton(lang);
+            redirectToLang(lang);
+        });
+    });
+});
+
 //Toggle Mobile
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -603,7 +741,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
 
 
 

@@ -209,6 +209,8 @@ header nav {
 header nav#navbar.container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
   border-radius: 0 0 1.5rem 1.5rem;
 }
 header nav#navbar.container object:hover {
@@ -217,11 +219,12 @@ header nav#navbar.container object:hover {
 }
 header nav#navbar.container ul {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   gap: 4%;
   align-self: center;
   text-align: center;
-  width: 90%;
+  width: auto;
+  flex: 1 1 auto;
 }
 @media (max-width: 850px) {
   header nav#navbar.container ul {
@@ -254,6 +257,41 @@ header nav#navbar.container ul li.btn {
   padding: 1.2%;
   background-color: #5FB8A9;
   border-radius: 1.875rem;
+}
+header nav#navbar.container .language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #33617A;
+  font-size: clamp(0.6875rem, 0.5999rem + 0.3738vw, 1.0625rem);
+  font-weight: 600;
+}
+header nav#navbar.container .language-switcher .lang-option {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+header nav#navbar.container .language-switcher .lang-option.active {
+  border-color: #5FB8A9;
+  background-color: rgba(95, 184, 169, 0.18);
+}
+header nav#navbar.container .language-switcher .lang-option:hover {
+  border-color: #5FB8A9;
+}
+@media (max-width: 850px) {
+  header nav#navbar.container .language-switcher {
+    margin-left: auto;
+  }
+}
+@media (max-width: 450px) {
+  header nav#navbar.container .language-switcher .lang-option {
+    padding: 0.2rem 0.45rem;
+  }
 }
 header nav#navbar.container .checkbox {
   display: none;
