@@ -7,6 +7,32 @@ if ( ! defined( 'BIOSOLVE_THEME_VERSION' ) ) {
   define( 'BIOSOLVE_THEME_VERSION', '1.0.0' );
 }
 
+function biosolve4all_get_lang() {
+  $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
+  $path = wp_parse_url( $request_uri, PHP_URL_PATH );
+  if ( $path && preg_match( '#^/en(/|$)#', $path ) ) {
+    return 'en';
+  }
+  return 'pt';
+}
+
+function biosolve4all_is_en() {
+  return biosolve4all_get_lang() === 'en';
+}
+
+function biosolve4all_language_attributes( $output ) {
+  if ( ! biosolve4all_is_en() ) {
+    return $output;
+  }
+
+  if ( strpos( $output, 'lang=' ) !== false ) {
+    return preg_replace( '/lang="[^"]*"/', 'lang="en-US"', $output );
+  }
+
+  return trim( $output ) . ' lang="en-US"';
+}
+add_filter( 'language_attributes', 'biosolve4all_language_attributes' );
+
 function biosolve4all_setup() {
   add_theme_support( 'title-tag' );
   add_theme_support( 'post-thumbnails' );

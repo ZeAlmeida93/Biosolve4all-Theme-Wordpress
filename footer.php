@@ -1,3 +1,21 @@
+<?php
+  $lang = function_exists( 'biosolve4all_get_lang' ) ? biosolve4all_get_lang() : 'pt';
+  $is_en = $lang === 'en';
+  $newsletter_label = $is_en ? 'SUBSCRIBE TO OUR NEWSLETTER' : 'SUBSCREVA A NOSSA NEWSLETTER';
+  $privacy_label = $is_en ? 'Privacy Policy' : 'Política de Privacidade';
+  $brevo_required_code = $is_en ? 'Select a country code' : 'Escolha um código de país';
+  $brevo_invalid_message = $is_en
+    ? 'The information provided is invalid. Please check the field format and try again.'
+    : 'A informação fornecida não é valida. Verifique o formato do campo e tente novamente.';
+  $brevo_required_message = $is_en
+    ? 'This field cannot be left blank.'
+    : 'Este campo não pode ser deixado em branco. ';
+  $brevo_selected_list = $is_en ? '{quantity} selected list' : '{quantity} lista selecionada';
+  $brevo_selected_lists = $is_en ? '{quantity} selected lists' : '{quantity} listas selecionadas';
+  $contact_success = $is_en ? 'Message sent successfully!' : 'Mensagem enviada com sucesso!';
+  $contact_error_server = $is_en ? 'Error connecting to the server. ' : 'Erro ao conectar com o servidor. ';
+  $contact_error_general = $is_en ? 'Error connecting to the server.' : 'Erro ao conectar com o servidor.';
+?>
 <footer class="footer">
 <div class="footer__container">
 <div class="footer__logo">
@@ -31,7 +49,7 @@
                     </p></a>
 </div>
 <div class="footer__newsletter">
-<button class="footer__btn" id="brevo-form-overlay">SUBSCREVA A NOSSA NEWSLETTER</button>
+<button class="footer__btn" id="brevo-form-overlay"><?php echo esc_html( $newsletter_label ); ?></button>
 </div>
 </div>
 </div>
@@ -45,27 +63,27 @@
 </svg>
 </i>
 </a>
-<a class="footer__privacy" href="https://biosolve4all.com/wp-content/uploads/2025/policies/privacy-policy.pdf" target="_blank">Política de Privacidade</a>
+<a class="footer__privacy" href="https://biosolve4all.com/wp-content/uploads/2025/policies/privacy-policy.pdf" target="_blank"><?php echo esc_html( $privacy_label ); ?></a>
 <span>©BioSolve4All</span>
 </div>
 </footer>
 
 <script>
-    window.REQUIRED_CODE_ERROR_MESSAGE = 'Escolha um código de país';
-    window.LOCALE = 'pt';
-    window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "A informação fornecida não é valida. Verifique o formato do campo e tente novamente.";
+    window.REQUIRED_CODE_ERROR_MESSAGE = '<?php echo esc_js( $brevo_required_code ); ?>';
+    window.LOCALE = '<?php echo esc_js( $lang ); ?>';
+    window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "<?php echo esc_js( $brevo_invalid_message ); ?>";
 
-    window.REQUIRED_ERROR_MESSAGE = "Este campo não pode ser deixado em branco. ";
+    window.REQUIRED_ERROR_MESSAGE = "<?php echo esc_js( $brevo_required_message ); ?>";
 
-    window.GENERIC_INVALID_MESSAGE = "A informação fornecida não é valida. Verifique o formato do campo e tente novamente.";
+    window.GENERIC_INVALID_MESSAGE = "<?php echo esc_js( $brevo_invalid_message ); ?>";
 
 
 
 
     window.translation = {
       common: {
-        selectedList: '{quantity} lista selecionada',
-        selectedLists: '{quantity} listas selecionadas'
+        selectedList: '<?php echo esc_js( $brevo_selected_list ); ?>',
+        selectedLists: '<?php echo esc_js( $brevo_selected_lists ); ?>'
       }
     };
 
@@ -73,7 +91,9 @@
   </script>
 <script defer="" src="https://sibforms.com/forms/end-form/build/main.js"></script>
 <script>
-   document.getElementById("contact-form").addEventListener("submit", async function (event) {
+   const contactForm = document.getElementById("contact-form");
+   if (contactForm) {
+   contactForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     let phoneInput = document.getElementById("phone").value.trim();
@@ -114,17 +134,18 @@
         let result = await response.json();
 
         if (response.ok) {
-            responseMessage.innerText = "Mensagem enviada com sucesso!";
+            responseMessage.innerText = "<?php echo esc_js( $contact_success ); ?>";
             responseMessage.style.color = "green";
         } else {
-            responseMessage.innerText = "Erro ao conectar com o servidor. " + (result.message || "");
+            responseMessage.innerText = "<?php echo esc_js( $contact_error_server ); ?>" + (result.message || "");
             responseMessage.style.color = "red";
         }
     } catch (error) {
-        responseMessage.innerText = "Erro ao conectar com o servidor.";
+        responseMessage.innerText = "<?php echo esc_js( $contact_error_general ); ?>";
         responseMessage.style.color = "red";
     }
 });
+}
 
 </script>
 <script type="text/javascript">

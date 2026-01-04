@@ -33,7 +33,34 @@
 
 <header>
 <nav class="container" id="navbar">
-<object data="" type=""><a href="<?php echo esc_url( home_url('/#hero-section') ); ?>"><svg fill="none" height="59" viewbox="0 0 46 59" width="46" xmlns="http://www.w3.org/2000/svg">
+<?php
+  $lang = function_exists( 'biosolve4all_get_lang' ) ? biosolve4all_get_lang() : 'pt';
+  $base_path = $lang === 'en' ? '/en/' : '/';
+  $nav_items = $lang === 'en'
+    ? array(
+      array( 'label' => 'Who We Are', 'anchor' => 'servicos' ),
+      array( 'label' => 'Services', 'anchor' => 'solutions' ),
+      array( 'label' => 'Differentiation', 'anchor' => 'especialidades' ),
+      array( 'label' => 'Process', 'anchor' => 'processo' ),
+      array( 'label' => 'Team', 'anchor' => 'equipa' ),
+      array( 'label' => 'Partners & Clients', 'anchor' => 'parceiros' ),
+      array( 'label' => 'News', 'anchor' => 'noticias' ),
+      array( 'label' => 'Contact', 'anchor' => 'contactos', 'button' => true ),
+    )
+    : array(
+      array( 'label' => 'Quem Somos', 'anchor' => 'servicos' ),
+      array( 'label' => 'Serviços', 'anchor' => 'solutions' ),
+      array( 'label' => 'Diferenciação', 'anchor' => 'especialidades' ),
+      array( 'label' => 'Processo', 'anchor' => 'processo' ),
+      array( 'label' => 'Equipa', 'anchor' => 'equipa' ),
+      array( 'label' => 'Parceiros e Clientes', 'anchor' => 'parceiros' ),
+      array( 'label' => 'Notícias', 'anchor' => 'noticias' ),
+      array( 'label' => 'Contactos', 'anchor' => 'contactos', 'button' => true ),
+    );
+  $lang_pt_url = home_url( '/' );
+  $lang_en_url = home_url( '/en/' );
+?>
+<object data="" type=""><a href="<?php echo esc_url( home_url( $base_path . '#hero-section' ) ); ?>"><svg fill="none" height="59" viewbox="0 0 46 59" width="46" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_676_1383)">
 <path d="M0 41.3595C0 44.6217 1.28847 47.5749 3.37175 49.715C5.45503 51.8526 8.33312 53.1747 11.5148 53.1747V29.5418C5.15636 29.5418 0 34.8327 0 41.3595Z" fill="#5FB8A9"></path>
 <path d="M11.5173 11.8177C11.5173 8.55304 10.2288 5.59987 8.14306 3.46224C6.05978 1.32209 3.18169 0 0 0V11.8177C0 18.342 5.15636 23.6355 11.5173 23.6355V11.8177Z" fill="#5FB8A9"></path>
@@ -48,19 +75,14 @@
 </svg>
 </a></object>
 <ul>
-<li> <a href="https://biosolve4all.com/home#servicos">Quem Somos</a></li>
-<li> <a href="https://biosolve4all.com/home#solutions">Serviços</a></li>
-<li> <a href="https://biosolve4all.com/home#especialidades">Diferenciação</a></li>
-<li> <a href="https://biosolve4all.com/home#processo">Processo</a></li>
-<li><a href="https://biosolve4all.com/home#equipa">Equipa</a></li>
-<li><a href="https://biosolve4all.com/home#parceiros">Parceiros e Clientes</a></li>
-<li><a href="https://biosolve4all.com/home#noticias">Notícias</a></li>
-<li class="btn"><a href="https://biosolve4all.com/home#contactos">Contactos</a></li>
+<?php foreach ( $nav_items as $nav_item ) : ?>
+  <li<?php echo ! empty( $nav_item['button'] ) ? ' class="btn"' : ''; ?>>
+    <a href="<?php echo esc_url( home_url( $base_path . '#' . $nav_item['anchor'] ) ); ?>">
+      <?php echo esc_html( $nav_item['label'] ); ?>
+    </a>
+  </li>
+<?php endforeach; ?>
 </ul>
-<?php
-  $lang_pt_url = home_url( '/' );
-  $lang_en_url = home_url( '/en/' );
-?>
 <div aria-label="Language selector" class="language-switcher" data-language-switcher data-lang-url-en="<?php echo esc_url( $lang_en_url ); ?>" data-lang-url-pt="<?php echo esc_url( $lang_pt_url ); ?>">
 <button aria-label="Português" class="lang-option" data-lang="pt" type="button">PT</button>
 <span aria-hidden="true">|</span>
