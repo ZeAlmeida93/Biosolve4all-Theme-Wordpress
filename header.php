@@ -92,9 +92,9 @@
 <?php endforeach; ?>
 </ul>
 <div aria-label="Language selector" class="language-switcher" data-language-switcher data-lang-url-en="<?php echo esc_url( $lang_en_url ); ?>" data-lang-url-pt="<?php echo esc_url( $lang_pt_url ); ?>">
-<button aria-label="Português" class="lang-option" data-lang="pt" type="button">PT</button>
+<a aria-label="Português" class="lang-option" data-lang="pt" href="<?php echo esc_url( $lang_pt_url ); ?>">PT</a>
 <span aria-hidden="true">|</span>
-<button aria-label="English" class="lang-option" data-lang="en" type="button">EN</button>
+<a aria-label="English" class="lang-option" data-lang="en" href="<?php echo esc_url( $lang_en_url ); ?>">EN</a>
 </div>
 <div class="mobile-menu">
 <input class="checkbox" id="" name="" type="checkbox"/>

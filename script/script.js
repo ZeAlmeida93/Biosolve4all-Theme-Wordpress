@@ -124,13 +124,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     buttons.forEach(button => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (event) => {
             const lang = button.dataset.lang;
             if (!lang) {
                 return;
             }
+            event.preventDefault();
             setStoredLang(lang);
             setActiveButton(lang);
+            const targetUrl = button.getAttribute('href') || (lang === 'pt' ? ptUrl : enUrl);
+            if (targetUrl) {
+                window.location.href = targetUrl;
+                return;
+            }
             redirectToLang(lang);
         });
     });
@@ -741,7 +747,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
 
 
 
