@@ -455,23 +455,40 @@ document.addEventListener("DOMContentLoaded", function () {
 */
 
 document.addEventListener("DOMContentLoaded", function () {
-    const cardData = [
-        [
-            { title: "01.", subtitle: "ENSAIOS ANTIMICROBIANOS", details: "ANTIBACTERIANOS<br>ANTIFÚNGICOS<br>ANTIVÍRICOS" },
-            { title: "02.", subtitle: "ENSAIOS BIOCOMPATIBILIDADE", details: "CITOTOXICIDADE<br>TOXICIDADE<br>HEMOCOMPATIBILIDADE" },
-            { title: "03.", subtitle: "ENSAIOS BIOQUÍMICOS", details: "BIODEGRADABILIDADE<br>OXIDATIVOS<br>ODOR" },
-            { title: "04.", subtitle: "I&D CONSULTADORIA", details: "I&D DE PRODUTOS<br>I&D DE PROCESSOS<br>I&D DE TECNOLOGIAS<br>FORMAÇÃO<br>CONFORMIDADE REGULAMENTAR" }
-        ]
-    ];
+    const localizedCardData = {
+        en: {
+            default: [
+                { title: "01.", subtitle: "ANTIMICROBIAL TESTS", details: "" },
+                { title: "02.", subtitle: "BIOCOMPATIBILITY TESTS", details: "" },
+                { title: "03.", subtitle: "CHEMICAL TESTS", details: "" },
+                { title: "04.", subtitle: "R&D CONSULTING", details: "" }
+            ],
+            hover: [
+                { title: "01.", subtitle: "ANTIMICROBIAL TESTS", details: "ANTIBACTERIAL<br>ANTIFUNGAL<br>ANTIVIRAL" },
+                { title: "02.", subtitle: "BIOCOMPATIBILITY TESTS", details: "CYTOTOXICITY<br>TOXICITY<br>HEMOCOMPATIBILITY" },
+                { title: "03.", subtitle: "CHEMICAL TESTS", details: "BIODEGRADABILITY<br>OXIDATIVE<br>ODOR" },
+                { title: "04.", subtitle: "R&D CONSULTING", details: "PRODUCT R&D<br>PROCESS R&D<br>TECHNOLOGY R&D<br>TRAINING<br>REGULATORY COMPLIANCE" }
+            ]
+        },
+        pt: {
+            default: [
+                { title: "01.", subtitle: "ENSAIOS ANTIMICROBIANOS", details: "" },
+                { title: "02.", subtitle: "ENSAIOS BIOCOMPATIBILIDADE", details: "" },
+                { title: "03.", subtitle: "ENSAIOS BIOQUÍMICOS", details: "" },
+                { title: "04.", subtitle: "I&D CONSULTADORIA", details: "" }
+            ],
+            hover: [
+                { title: "01.", subtitle: "ENSAIOS ANTIMICROBIANOS", details: "ANTIBACTERIANOS<br>ANTIFÚNGICOS<br>ANTIVÍRICOS" },
+                { title: "02.", subtitle: "ENSAIOS BIOCOMPATIBILIDADE", details: "CITOTOXICIDADE<br>TOXICIDADE<br>HEMOCOMPATIBILIDADE" },
+                { title: "03.", subtitle: "ENSAIOS BIOQUÍMICOS", details: "BIODEGRADABILIDADE<br>OXIDATIVOS<br>ODOR" },
+                { title: "04.", subtitle: "I&D CONSULTADORIA", details: "I&D DE PRODUTOS<br>I&D DE PROCESSOS<br>I&D DE TECNOLOGIAS<br>FORMAÇÃO<br>CONFORMIDADE REGULAMENTAR" }
+            ]
+        }
+    };
 
+    const locale = (window.LOCALE || document.documentElement.lang || "pt").toLowerCase();
+    const data = locale.startsWith("en") ? localizedCardData.en : localizedCardData.pt;
     const cards = document.querySelectorAll(".desktop-card");
-    
-    const defaultData = [
-        { title: "01.", subtitle: "ENSAIOS ANTIMICROBIANOS", details: "" },
-        { title: "02.", subtitle: "ENSAIOS BIOCOMPATIBILIDADE", details: "" },
-        { title: "03.", subtitle: "ENSAIOS BIOQUÍMICOS", details: "" },
-        { title: "04.", subtitle: "I&D CONSULTADORIA", details: "" }
-    ];
 
     cards.forEach((card, index) => {
         card.addEventListener("mouseenter", () => {
@@ -491,9 +508,9 @@ document.addEventListener("DOMContentLoaded", function () {
             details.classList.add("fade-out-text");
 
             setTimeout(() => {
-                h1.innerHTML = cardData[0][index].title;
-                h3.innerHTML = cardData[0][index].subtitle;
-                details.innerHTML = cardData[0][index].details;
+                h1.innerHTML = data.hover[index].title;
+                h3.innerHTML = data.hover[index].subtitle;
+                details.innerHTML = data.hover[index].details;
 
                 // Apply fade-in effect after content update
                 h1.classList.remove("fade-out-text");
@@ -516,12 +533,18 @@ document.addEventListener("DOMContentLoaded", function () {
         card.addEventListener("mouseleave", () => {
             const h1 = card.querySelector("h1");
             const h3 = card.querySelector("h3");
-            const details = card.querySelector(".card-content");
+            let details = card.querySelector(".card-content");
+
+            if (!details) {
+                details = document.createElement("p");
+                details.classList.add("card-content");
+                card.appendChild(details);
+            }
 
             // Reset content to default state
-            h1.innerHTML = defaultData[index].title;
-            h3.innerHTML = defaultData[index].subtitle;
-            details.innerHTML = defaultData[index].details;
+            h1.innerHTML = data.default[index].title;
+            h3.innerHTML = data.default[index].subtitle;
+            details.innerHTML = data.default[index].details;
         });
     });
 });
@@ -747,7 +770,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
 
 
 
