@@ -257,7 +257,6 @@ header nav#navbar.container ul li.btn {
 }
 header nav#navbar.container .checkbox {
   display: none;
-  text-decoration: none;
 }
 header nav#navbar.container .checkbox:hover {
   cursor: pointer;
