@@ -35,7 +35,17 @@
 <nav class="container" id="navbar">
 <?php
   $lang = function_exists( 'biosolve4all_get_lang' ) ? biosolve4all_get_lang() : 'pt';
-  $base_path = $lang === 'en' ? '/en/' : '/';
+  $front_page_id = get_option( 'page_on_front' );
+  $front_page_url = $front_page_id ? get_permalink( $front_page_id ) : home_url( '/' );
+  $lang_pt_url = $front_page_url;
+  $lang_en_url = home_url( '/en/' );
+  $base_path = $lang === 'en'
+    ? wp_parse_url( $lang_en_url, PHP_URL_PATH )
+    : wp_parse_url( $lang_pt_url, PHP_URL_PATH );
+  if ( ! $base_path ) {
+    $base_path = '/';
+  }
+  $base_path = trailingslashit( $base_path );
   $nav_items = $lang === 'en'
     ? array(
       array( 'label' => 'Who We Are', 'anchor' => 'servicos' ),
@@ -57,8 +67,6 @@
       array( 'label' => 'Notícias', 'anchor' => 'noticias' ),
       array( 'label' => 'Contactos', 'anchor' => 'contactos', 'button' => true ),
     );
-  $lang_pt_url = home_url( '/' );
-  $lang_en_url = home_url( '/en/' );
 ?>
 <object data="" type=""><a href="<?php echo esc_url( home_url( $base_path . '#hero-section' ) ); ?>"><svg fill="none" height="59" viewbox="0 0 46 59" width="46" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_676_1383)">
