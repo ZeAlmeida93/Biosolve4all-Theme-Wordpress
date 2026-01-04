@@ -209,8 +209,6 @@ header nav {
 header nav#navbar.container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
   border-radius: 0 0 1.5rem 1.5rem;
 }
 header nav#navbar.container object:hover {
@@ -219,12 +217,11 @@ header nav#navbar.container object:hover {
 }
 header nav#navbar.container ul {
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
   gap: 4%;
   align-self: center;
   text-align: center;
-  width: auto;
-  flex: 1 1 auto;
+  width: 90%;
 }
 @media (max-width: 850px) {
   header nav#navbar.container ul {
@@ -258,43 +255,9 @@ header nav#navbar.container ul li.btn {
   background-color: #5FB8A9;
   border-radius: 1.875rem;
 }
-header nav#navbar.container .language-switcher {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #33617A;
-  font-size: clamp(0.6875rem, 0.5999rem + 0.3738vw, 1.0625rem);
-  font-weight: 600;
-}
-header nav#navbar.container .language-switcher .lang-option {
-  border: 1px solid transparent;
-  border-radius: 999px;
-  padding: 0.25rem 0.6rem;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-}
-header nav#navbar.container .language-switcher .lang-option.active {
-  border-color: #5FB8A9;
-  background-color: rgba(95, 184, 169, 0.18);
-}
-header nav#navbar.container .language-switcher .lang-option:hover {
-  border-color: #5FB8A9;
-}
-@media (max-width: 850px) {
-  header nav#navbar.container .language-switcher {
-    margin-left: auto;
-  }
-}
-@media (max-width: 450px) {
-  header nav#navbar.container .language-switcher .lang-option {
-    padding: 0.2rem 0.45rem;
-  }
-}
 header nav#navbar.container .checkbox {
   display: none;
+  text-decoration: none;
 }
 header nav#navbar.container .checkbox:hover {
   cursor: pointer;
@@ -1312,7 +1275,7 @@ header .nav-links .menu-icon {
   }
 }
 #parceiros.container .carousel .flickity-prev-next-button:hover {
-  background: #82c8bc;
+  background: rgb(130.3246753247, 199.6753246753, 187.987012987);
 }
 #parceiros.container .carousel .flickity-prev-next-button:focus {
   outline: none;
