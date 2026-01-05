@@ -1814,6 +1814,8 @@ header .nav-links .menu-icon {
 
 .news-page {
   padding-top: 120px;
+  padding-right: 40px;
+    padding-left: 40px;
   padding-bottom: 90px;
   font-family: "Poppins", sans-serif;
 }
@@ -1893,6 +1895,7 @@ header .nav-links .menu-icon {
 }
 .news-card__cta {
   margin-top: auto;
+  width: fit-content;
   font-size: 0.78rem;
   font-weight: 600;
   text-transform: uppercase;
