@@ -1826,6 +1826,7 @@ header .nav-links .menu-icon {
   margin-bottom: 32px;
   padding-bottom: 12px;
   border-bottom: 1px solid #e5eaee;
+  z-index: 4;
 }
 .news-header h1 {
   font-size: 2rem;
