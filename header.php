@@ -39,6 +39,7 @@
   $front_page_url = $front_page_id ? get_permalink( $front_page_id ) : home_url( '/' );
   $lang_pt_url = $front_page_url;
   $lang_en_url = home_url( '/en/' );
+  $news_url = $lang === 'en' ? home_url( '/en/noticias/' ) : home_url( '/noticias/' );
   $base_path = $lang === 'en'
     ? wp_parse_url( $lang_en_url, PHP_URL_PATH )
     : wp_parse_url( $lang_pt_url, PHP_URL_PATH );
@@ -54,7 +55,7 @@
       array( 'label' => 'Process', 'anchor' => 'processo' ),
       array( 'label' => 'Team', 'anchor' => 'equipa' ),
       array( 'label' => 'Partners & Clients', 'anchor' => 'parceiros' ),
-      array( 'label' => 'News', 'anchor' => 'noticias' ),
+      array( 'label' => 'News', 'anchor' => 'noticias', 'url' => $news_url ),
       array( 'label' => 'Contact', 'anchor' => 'contactos', 'button' => true ),
     )
     : array(
@@ -64,7 +65,7 @@
       array( 'label' => 'Processo', 'anchor' => 'processo' ),
       array( 'label' => 'Equipa', 'anchor' => 'equipa' ),
       array( 'label' => 'Parceiros e Clientes', 'anchor' => 'parceiros' ),
-      array( 'label' => 'Notícias', 'anchor' => 'noticias' ),
+      array( 'label' => 'Notícias', 'anchor' => 'noticias', 'url' => $news_url ),
       array( 'label' => 'Contactos', 'anchor' => 'contactos', 'button' => true ),
     );
 ?>
@@ -85,7 +86,10 @@
 <ul>
 <?php foreach ( $nav_items as $nav_item ) : ?>
   <li<?php echo ! empty( $nav_item['button'] ) ? ' class="btn"' : ''; ?>>
-    <a href="<?php echo esc_url( home_url( $base_path . '#' . $nav_item['anchor'] ) ); ?>">
+    <?php
+      $nav_url = isset( $nav_item['url'] ) ? $nav_item['url'] : home_url( $base_path . '#' . $nav_item['anchor'] );
+    ?>
+    <a href="<?php echo esc_url( $nav_url ); ?>">
       <?php echo esc_html( $nav_item['label'] ); ?>
     </a>
   </li>

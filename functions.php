@@ -58,6 +58,7 @@ function biosolve4all_enqueue_assets() {
 
   // Google Fonts (Figtree)
   wp_enqueue_style( 'biosolve-figtree', 'https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap', array(), null );
+  wp_enqueue_style( 'biosolve-poppins', 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap', array(), null );
 
   // JS libs
   wp_enqueue_script( 'biosolve-flickity', 'https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js', array(), '2.2.2', true );

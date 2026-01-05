@@ -1,25 +1,31 @@
 <?php
 get_header();
 ?>
-<main class="container" style="padding-top: 120px; padding-bottom: 80px;">
+<main class="container single-post">
   <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
     <article <?php post_class(); ?>>
-      <header style="margin-bottom: 18px;">
-        <h1><?php the_title(); ?></h1>
-        <p style="opacity:.75;"><?php echo esc_html( get_the_date() ); ?></p>
+      <header class="post-hero">
+        <div class="post-hero__row">
+          <h1 class="post-hero__title"><?php the_title(); ?></h1>
+          <p class="post-hero__date"><?php echo esc_html( get_the_date() ); ?></p>
+        </div>
+        <?php $excerpt = get_the_excerpt(); ?>
+        <?php if ( $excerpt ) : ?>
+          <p class="post-hero__subtitle"><?php echo esc_html( $excerpt ); ?></p>
+        <?php endif; ?>
       </header>
 
       <?php if ( has_post_thumbnail() ) : ?>
-        <div style="margin: 24px 0;">
-          <?php the_post_thumbnail('large'); ?>
+        <div class="post-hero__media">
+          <?php the_post_thumbnail( 'large', array( 'class' => 'post-hero__image', 'loading' => 'lazy' ) ); ?>
         </div>
       <?php endif; ?>
 
-      <div class="post-content">
+      <div class="post-content post-body">
         <?php the_content(); ?>
       </div>
 
-      <footer style="margin-top: 40px;">
+      <footer class="post-footer">
         <?php the_post_navigation(); ?>
       </footer>
     </article>
