@@ -1836,6 +1836,7 @@ header .nav-links .menu-icon {
 .news-header p {
   font-size: 0.95rem;
   color: #6b7b86;
+  z-index: 4;
 }
 .news-grid {
   display: grid;
@@ -1936,12 +1937,12 @@ header .nav-links .menu-icon {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 1.5rem;
+  padding: 3.5rem;
 }
 .post-hero {
   border-bottom: 1px solid #e5eaee;
   padding-bottom: 16px;
-  padding-top: 15%;
+  padding-top: 7rem;
   z-index: 4;
 }
 .post-hero__row {
@@ -1969,6 +1970,7 @@ header .nav-links .menu-icon {
   font-size: 1rem;
   font-weight: 500;
   color: #4a5a64;
+  display: none;
 }
 .post-hero__media {
   margin-top: 8px;
@@ -1993,6 +1995,11 @@ header .nav-links .menu-icon {
 }
 .post-body p {
   margin: 0 0 18px;
+}
+
+.post-body p:first-child {
+  font-weight: 500;
+  font-size: inherit * 1.1;
 }
 .post-body a {
   color: #4a7f78;
