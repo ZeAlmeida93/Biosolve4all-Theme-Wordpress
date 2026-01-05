@@ -1937,7 +1937,10 @@ header .nav-links .menu-icon {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 3.5rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  padding-left: 7.5rem;
+  padding-right: 7.5rem;
 }
 .post-hero {
   border-bottom: 1px solid #e5eaee;
@@ -1998,7 +2001,7 @@ header .nav-links .menu-icon {
 }
 
 .post-body p:first-child {
-  font-weight: 500;
+  font-weight: 600;
   font-size: inherit * 1.1;
 }
 .post-body a {
