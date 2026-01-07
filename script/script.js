@@ -98,10 +98,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const storedLang = getStoredLang();
     const currentLang = getCurrentLang();
+    const isHomeLangPath = currentPath === normalizedEn || currentPath === normalizedPt;
 
     if (storedLang) {
         setActiveButton(storedLang);
-        if (storedLang !== currentLang) {
+        if (storedLang !== currentLang && isHomeLangPath) {
             redirectToLang(storedLang);
         }
     } else {
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const geoLang = countryCode.trim().toUpperCase() === 'PT' ? 'pt' : 'en';
                 setStoredLang(geoLang);
                 setActiveButton(geoLang);
-                if (geoLang !== currentLang) {
+                if (geoLang !== currentLang && isHomeLangPath) {
                     redirectToLang(geoLang);
                 }
             })
@@ -770,6 +771,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
 
 
