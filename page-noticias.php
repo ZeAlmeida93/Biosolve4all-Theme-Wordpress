@@ -36,6 +36,11 @@ $query = new WP_Query( $query_args );
           $translated_excerpt = $is_en ? get_post_meta( $post_id, 'excerpt_en', true ) : '';
           $translated_content = $is_en ? get_post_meta( $post_id, 'content_en', true ) : '';
           $translated_image = $is_en ? get_post_meta( $post_id, 'featured_image_en', true ) : '';
+          $post_url = get_permalink( $post_id );
+          $post_url = remove_query_arg( 'lang', $post_url );
+          if ( $is_en ) {
+            $post_url = add_query_arg( 'lang', 'en', $post_url );
+          }
 
           $title_text = $translated_title ? $translated_title : get_the_title();
           $excerpt_text = $translated_excerpt ? $translated_excerpt : get_the_excerpt();
@@ -52,7 +57,7 @@ $query = new WP_Query( $query_args );
           }
         ?>
         <article <?php post_class( 'news-card' ); ?>>
-          <a class="news-card__link" href="<?php the_permalink(); ?>">
+          <a class="news-card__link" href="<?php echo esc_url( $post_url ); ?>">
             <?php if ( $translated_image ) : ?>
               <?php if ( is_numeric( $translated_image ) ) : ?>
                 <?php echo wp_get_attachment_image( (int) $translated_image, 'large', false, array( 'class' => 'news-card__image', 'loading' => 'lazy' ) ); ?>

@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const getCurrentLang = () => {
+        const urlLang = new URLSearchParams(window.location.search).get('lang');
+        if (urlLang === 'en' || urlLang === 'pt') {
+            return urlLang;
+        }
         if (normalizedEn && currentPath.startsWith(normalizedEn)) {
             return 'en';
         }
@@ -771,5 +775,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
 

@@ -8,6 +8,10 @@ if ( ! defined( 'BIOSOLVE_THEME_VERSION' ) ) {
 }
 
 function biosolve4all_get_lang() {
+  $query_lang = isset( $_GET['lang'] ) ? sanitize_key( wp_unslash( $_GET['lang'] ) ) : '';
+  if ( $query_lang === 'en' || $query_lang === 'pt' ) {
+    return $query_lang;
+  }
   $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
   $path = wp_parse_url( $request_uri, PHP_URL_PATH );
   if ( $path && preg_match( '#^/en(/|$)#', $path ) ) {
