@@ -76,5 +76,16 @@ function biosolve4all_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'biosolve4all_enqueue_assets' );
 
+function biosolve4all_add_news_rewrite() {
+  add_rewrite_rule( '^en/noticias/?$', 'index.php?pagename=noticias', 'top' );
+}
+add_action( 'init', 'biosolve4all_add_news_rewrite' );
+
+function biosolve4all_flush_rewrite_rules() {
+  biosolve4all_add_news_rewrite();
+  flush_rewrite_rules();
+}
+add_action( 'after_switch_theme', 'biosolve4all_flush_rewrite_rules' );
+
 // Keep WP from injecting extra p tags in embeds etc (optional; comment out if you rely on auto formatting)
 // remove_filter( 'the_content', 'wpautop' );
