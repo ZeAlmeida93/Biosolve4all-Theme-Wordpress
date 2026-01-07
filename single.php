@@ -6,6 +6,8 @@ get_header();
     <?php
       $lang = function_exists( 'biosolve4all_get_lang' ) ? biosolve4all_get_lang() : 'pt';
       $is_en = $lang === 'en';
+      $news_label = $is_en ? 'See More News' : 'Ver Mais Noticias';
+      $news_url = $is_en ? home_url( '/en/noticias/' ) : home_url( '/noticias/' );
       $post_id = get_the_ID();
       $translated_title = $is_en ? get_post_meta( $post_id, 'title_en', true ) : '';
       $translated_excerpt = $is_en ? get_post_meta( $post_id, 'excerpt_en', true ) : '';
@@ -63,7 +65,9 @@ get_header();
       </div>
 
       <footer class="post-footer">
-        <?php the_post_navigation(); ?>
+        <a class="post-footer__cta" href="<?php echo esc_url( $news_url ); ?>">
+          <?php echo esc_html( $news_label ); ?>
+        </a>
       </footer>
     </article>
   <?php endwhile; endif; ?>
