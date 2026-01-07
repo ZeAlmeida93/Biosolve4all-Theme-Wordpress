@@ -276,6 +276,7 @@ header nav#navbar.container .language-switcher .lang-option {
   font: inherit;
   cursor: pointer;
   transition: 0.2s ease-in-out;
+      text-decoration: none;
 }
 header nav#navbar.container .language-switcher .lang-option.active {
   border-color: #5FB8A9;
