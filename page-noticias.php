@@ -42,6 +42,14 @@ $query = new WP_Query( $query_args );
           if ( ! $translated_excerpt && $translated_content ) {
             $excerpt_text = wp_trim_words( wp_strip_all_tags( $translated_content ), 24 );
           }
+
+          if ( $is_en && ! $translated_title ) {
+            $title_text = biosolve4all_translate_text( $title_text, 'EN-GB', 'PT', 'news_title_' . $post_id );
+          }
+
+          if ( $is_en && ! $translated_excerpt ) {
+            $excerpt_text = biosolve4all_translate_text( wp_strip_all_tags( $excerpt_text ), 'EN-GB', 'PT', 'news_excerpt_' . $post_id );
+          }
         ?>
         <article <?php post_class( 'news-card' ); ?>>
           <a class="news-card__link" href="<?php the_permalink(); ?>">

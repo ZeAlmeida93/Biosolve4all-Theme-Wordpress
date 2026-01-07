@@ -87,5 +87,60 @@ function biosolve4all_flush_rewrite_rules() {
 }
 add_action( 'after_switch_theme', 'biosolve4all_flush_rewrite_rules' );
 
+function biosolve4all_get_deepl_endpoint() {
+  if ( ! defined( 'DEEPL_API_KEY' ) || ! DEEPL_API_KEY ) {
+    return null;
+  }
+  $key = (string) DEEPL_API_KEY;
+  $is_free = substr( $key, -3 ) === ':fx';
+  return $is_free ? 'https://api-free.deepl.com/v2/translate' : 'https://api.deepl.com/v2/translate';
+}
+
+function biosolve4all_translate_text( $text, $target_lang = 'EN-GB', $source_lang = 'PT', $context = '' ) {
+  if ( ! $text ) {
+    return $text;
+  }
+
+  $endpoint = biosolve4all_get_deepl_endpoint();
+  if ( ! $endpoint ) {
+    return $text;
+  }
+
+  $cache_key = 'biosolve_deepl_' . md5( $source_lang . '|' . $target_lang . '|' . $context . '|' . $text );
+  $cached = get_transient( $cache_key );
+  if ( false !== $cached ) {
+    return $cached;
+  }
+
+  $response = wp_remote_post(
+    $endpoint,
+    array(
+      'timeout' => 12,
+      'body' => array(
+        'auth_key' => DEEPL_API_KEY,
+        'text' => $text,
+        'source_lang' => $source_lang,
+        'target_lang' => $target_lang,
+        'tag_handling' => 'html',
+      ),
+    )
+  );
+
+  if ( is_wp_error( $response ) ) {
+    return $text;
+  }
+
+  $body = wp_remote_retrieve_body( $response );
+  $data = json_decode( $body, true );
+  if ( ! is_array( $data ) || empty( $data['translations'][0]['text'] ) ) {
+    return $text;
+  }
+
+  $translated = (string) $data['translations'][0]['text'];
+  set_transient( $cache_key, $translated, WEEK_IN_SECONDS );
+
+  return $translated;
+}
+
 // Keep WP from injecting extra p tags in embeds etc (optional; comment out if you rely on auto formatting)
 // remove_filter( 'the_content', 'wpautop' );

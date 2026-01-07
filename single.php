@@ -17,6 +17,21 @@ get_header();
       if ( ! $translated_excerpt && $translated_content ) {
         $excerpt_text = wp_trim_words( wp_strip_all_tags( $translated_content ), 24 );
       }
+
+      if ( $is_en && ! $translated_title ) {
+        $title_text = biosolve4all_translate_text( $title_text, 'EN-GB', 'PT', 'post_title_' . $post_id );
+      }
+
+      if ( $is_en && ! $translated_excerpt ) {
+        $excerpt_text = biosolve4all_translate_text( wp_strip_all_tags( $excerpt_text ), 'EN-GB', 'PT', 'post_excerpt_' . $post_id );
+      }
+
+      $content_to_render = apply_filters( 'the_content', get_the_content() );
+      if ( $translated_content ) {
+        $content_to_render = apply_filters( 'the_content', $translated_content );
+      } elseif ( $is_en ) {
+        $content_to_render = biosolve4all_translate_text( $content_to_render, 'EN-GB', 'PT', 'post_content_' . $post_id );
+      }
     ?>
     <article <?php post_class(); ?>>
       <header class="post-hero">
@@ -44,13 +59,7 @@ get_header();
       <?php endif; ?>
 
       <div class="post-content post-body">
-        <?php
-          if ( $translated_content ) {
-            echo apply_filters( 'the_content', $translated_content );
-          } else {
-            the_content();
-          }
-        ?>
+        <?php echo wp_kses_post( $content_to_render ); ?>
       </div>
 
       <footer class="post-footer">
