@@ -265,6 +265,7 @@ header nav#navbar.container .language-switcher {
   color: #33617A;
   font-size: clamp(0.6875rem, 0.5999rem + 0.3738vw, 1.0625rem);
   font-weight: 600;
+      text-decoration: none;
 }
 header nav#navbar.container .language-switcher .lang-option {
   border: 1px solid transparent;
