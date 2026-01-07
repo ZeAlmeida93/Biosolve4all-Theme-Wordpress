@@ -37,8 +37,11 @@
   $lang = function_exists( 'biosolve4all_get_lang' ) ? biosolve4all_get_lang() : 'pt';
   $front_page_id = get_option( 'page_on_front' );
   $front_page_url = $front_page_id ? get_permalink( $front_page_id ) : home_url( '/' );
-  $lang_pt_url = $front_page_url;
-  $lang_en_url = home_url( '/en/' );
+  $switcher_urls = function_exists( 'biosolve4all_get_language_switcher_urls' )
+    ? biosolve4all_get_language_switcher_urls()
+    : array( 'pt' => $front_page_url, 'en' => home_url( '/en/' ) );
+  $lang_pt_url = $switcher_urls['pt'];
+  $lang_en_url = $switcher_urls['en'];
   $news_url = $lang === 'en' ? home_url( '/en/noticias/' ) : home_url( '/noticias/' );
   $base_path = $lang === 'en'
     ? wp_parse_url( $lang_en_url, PHP_URL_PATH )

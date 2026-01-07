@@ -24,6 +24,53 @@ function biosolve4all_is_en() {
   return biosolve4all_get_lang() === 'en';
 }
 
+function biosolve4all_get_language_switcher_urls() {
+  $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '/';
+  $path = wp_parse_url( $request_uri, PHP_URL_PATH );
+  $query = wp_parse_url( $request_uri, PHP_URL_QUERY );
+  $query_args = array();
+  if ( $query ) {
+    parse_str( $query, $query_args );
+  }
+
+  $current_url = home_url( $request_uri );
+
+  if ( is_singular( 'post' ) ) {
+    $pt_url = remove_query_arg( 'lang', $current_url );
+    $en_url = add_query_arg( 'lang', 'en', $pt_url );
+    return array(
+      'pt' => $pt_url,
+      'en' => $en_url,
+    );
+  }
+
+  $path = $path ? $path : '/';
+  $pt_path = preg_replace( '#^/en(/|$)#', '/', $path );
+  if ( ! $pt_path ) {
+    $pt_path = '/';
+  }
+  $en_path = $path;
+  if ( ! preg_match( '#^/en(/|$)#', $path ) ) {
+    $en_path = $path === '/' ? '/en/' : '/en' . $path;
+  }
+
+  $pt_url = home_url( $pt_path );
+  $en_url = home_url( $en_path );
+
+  if ( $query_args ) {
+    unset( $query_args['lang'] );
+    if ( $query_args ) {
+      $pt_url = add_query_arg( $query_args, $pt_url );
+      $en_url = add_query_arg( $query_args, $en_url );
+    }
+  }
+
+  return array(
+    'pt' => $pt_url,
+    'en' => $en_url,
+  );
+}
+
 function biosolve4all_language_attributes( $output ) {
   if ( ! biosolve4all_is_en() ) {
     return $output;
