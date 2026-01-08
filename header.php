@@ -18,6 +18,31 @@
         <meta content="BioSolve4All - Soluções Especializadas em Biotecnologia" name="twitter:title"/>
         <meta content="Especialistas em testes microbiológicos, bioquímicos, consultoria e desenvolvimento técnico em biotecnologia." name="twitter:description"/>
         <meta content="https://biosolve4all.com/img/twitter-biosolve.jpg" name="twitter:image"/>
+        <script>
+          (function () {
+            var path = window.location.pathname || "/";
+            var hasQueryLang = /(?:[?&]lang=)(en|pt)(?:&|$)/.test(window.location.search);
+            var isEnPath = /^\/en(\/|$)/.test(path);
+            if (hasQueryLang || isEnPath) {
+              return;
+            }
+
+            var timeZone = "";
+            try {
+              timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+            } catch (e) {
+              timeZone = "";
+            }
+            var language = (navigator.language || "").toLowerCase();
+            var isPortugal = timeZone === "Europe/Lisbon" || language.indexOf("pt") === 0;
+
+            if (!isPortugal) {
+              var nextPath = path === "/" ? "/en/" : "/en" + path;
+              var nextUrl = nextPath + window.location.search + window.location.hash;
+              window.location.replace(nextUrl);
+            }
+          })();
+        </script>
         <link href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/favicon.png" rel="icon" type="image/png"/>
         <link href="https://fonts.googleapis.com" rel="preconnect"/>
         <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -43,13 +68,7 @@
   $lang_pt_url = $switcher_urls['pt'];
   $lang_en_url = $switcher_urls['en'];
   $news_url = $lang === 'en' ? home_url( '/en/noticias/' ) : home_url( '/noticias/' );
-  $base_path = $lang === 'en'
-    ? wp_parse_url( $lang_en_url, PHP_URL_PATH )
-    : wp_parse_url( $lang_pt_url, PHP_URL_PATH );
-  if ( ! $base_path ) {
-    $base_path = '/';
-  }
-  $base_path = trailingslashit( $base_path );
+  $home_anchor_base = $lang === 'en' ? home_url( '/en/' ) : $front_page_url;
   $nav_items = $lang === 'en'
     ? array(
       array( 'label' => 'Who We Are', 'anchor' => 'servicos' ),
@@ -90,7 +109,9 @@
 <?php foreach ( $nav_items as $nav_item ) : ?>
   <li<?php echo ! empty( $nav_item['button'] ) ? ' class="btn"' : ''; ?>>
     <?php
-      $nav_url = isset( $nav_item['url'] ) ? $nav_item['url'] : home_url( $base_path . '#' . $nav_item['anchor'] );
+      $nav_url = isset( $nav_item['url'] )
+        ? $nav_item['url']
+        : trailingslashit( $home_anchor_base ) . '#' . $nav_item['anchor'];
     ?>
     <a href="<?php echo esc_url( $nav_url ); ?>">
       <?php echo esc_html( $nav_item['label'] ); ?>
