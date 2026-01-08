@@ -554,6 +554,98 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Share modal for single post pages
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.querySelector('.share-modal');
+    const trigger = document.querySelector('.share-trigger');
+    if (!modal || !trigger) {
+        return;
+    }
+
+    const closeButtons = modal.querySelectorAll('[data-share-close]');
+    const copyButton = modal.querySelector('[data-share-copy]');
+    const shareLinks = modal.querySelectorAll('[data-share-link]');
+    const shareTitle = trigger.dataset.shareTitle || document.title;
+
+    const getShareUrl = () => window.location.href;
+
+    const updateShareLinks = () => {
+        const url = encodeURIComponent(getShareUrl());
+        const title = encodeURIComponent(shareTitle);
+        const mappings = {
+            facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+            linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+            x: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+            whatsapp: `https://wa.me/?text=${title}%20${url}`,
+            email: `mailto:?subject=${title}&body=${url}`
+        };
+
+        shareLinks.forEach(link => {
+            const key = link.dataset.shareLink;
+            if (key && mappings[key]) {
+                link.setAttribute('href', mappings[key]);
+            }
+        });
+    };
+
+    const openModal = () => {
+        updateShareLinks();
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('share-modal-open');
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('is-active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('share-modal-open');
+    };
+
+    trigger.addEventListener('click', openModal);
+    closeButtons.forEach(button => button.addEventListener('click', closeModal));
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('is-active')) {
+            closeModal();
+        }
+    });
+
+    if (copyButton) {
+        const defaultLabel = copyButton.textContent;
+        copyButton.addEventListener('click', () => {
+            const url = getShareUrl();
+            const copiedLabel = copyButton.dataset.shareCopied || defaultLabel;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    copyButton.textContent = copiedLabel;
+                    setTimeout(() => {
+                        copyButton.textContent = defaultLabel;
+                    }, 2000);
+                });
+            } else {
+                const temp = document.createElement('textarea');
+                temp.value = url;
+                temp.style.position = 'fixed';
+                temp.style.top = '-999px';
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                copyButton.textContent = copiedLabel;
+                setTimeout(() => {
+                    copyButton.textContent = defaultLabel;
+                }, 2000);
+            }
+        });
+    }
+});
+
 
 
 //Mobile dropdowns
@@ -775,4 +867,3 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
