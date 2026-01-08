@@ -234,6 +234,24 @@ function biosolve4all_setup() {
 }
 add_action( 'after_setup_theme', 'biosolve4all_setup' );
 
+function biosolve4all_security_headers() {
+  header( 'X-Content-Type-Options: nosniff' );
+  header( 'X-Frame-Options: SAMEORIGIN' );
+  header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+  header( 'Permissions-Policy: geolocation=(), microphone=(), camera=()' );
+}
+add_action( 'send_headers', 'biosolve4all_security_headers' );
+
+function biosolve4all_disable_xmlrpc( $enabled ) {
+  if ( defined( 'BIOSOLVE_ALLOW_XMLRPC' ) && BIOSOLVE_ALLOW_XMLRPC ) {
+    return $enabled;
+  }
+  return false;
+}
+add_filter( 'xmlrpc_enabled', 'biosolve4all_disable_xmlrpc' );
+
+remove_action( 'wp_head', 'wp_generator' );
+
 function biosolve4all_enqueue_assets() {
   $uri = get_template_directory_uri();
 
