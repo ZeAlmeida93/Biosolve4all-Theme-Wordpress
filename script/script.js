@@ -192,8 +192,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+      if (this.hasAttribute('data-share-link') || this.closest('.share-modal')) {
+        return;
+      }
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
+      if (!target) {
+        return;
+      }
       const offset = 121; // Adjust according to your navbar height
       const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
   
