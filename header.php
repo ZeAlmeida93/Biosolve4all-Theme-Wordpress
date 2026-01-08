@@ -3,21 +3,8 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8"/>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-        <meta content="yes" name="mobile-web-app-capable"/>
-        <meta content="yes" name="apple-mobile-web-app-capable"/>
-        <meta content="Biosolve4All oferece serviços especializados em testes microbiológicos, bioquímicos, biocompatibilidade, consultoria e investigação &amp; desenvolvimento para indústrias multissetoriais." name="description"/>
-        <meta content="biotecnologia, testes microbiológicos, testes bioquímicos, biocompatibilidade, consultoria biotecnologia, análise técnica" name="keywords"/>
-        <meta content="BioSolve4All - Soluções Especializadas em Biotecnologia" property="og:title"/>
-        <meta content="Parceiro especializado em análises técnicas e consultoria em microbiologia, bioquímica e biocompatibilidade para diversos setores industriais." property="og:description"/>
-        <meta content="website" property="og:type"/>
-        <meta content="https://biosolve4all.com" property="og:url"/>
-        <meta content="https://biosolve4all.com/img/og-biosolve.jpg" property="og:image"/>
-        <meta content="summary_large_image" name="twitter:card"/>
-        <meta content="BioSolve4All - Soluções Especializadas em Biotecnologia" name="twitter:title"/>
-        <meta content="Especialistas em testes microbiológicos, bioquímicos, consultoria e desenvolvimento técnico em biotecnologia." name="twitter:description"/>
-        <meta content="https://biosolve4all.com/img/twitter-biosolve.jpg" name="twitter:image"/>
+    <meta content="yes" name="mobile-web-app-capable"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
         <script>
           (function () {
             var path = window.location.pathname || "/";

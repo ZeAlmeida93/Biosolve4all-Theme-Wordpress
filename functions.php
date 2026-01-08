@@ -84,6 +84,133 @@ function biosolve4all_language_attributes( $output ) {
 }
 add_filter( 'language_attributes', 'biosolve4all_language_attributes' );
 
+function biosolve4all_get_current_url() {
+  $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '/';
+  return home_url( $request_uri );
+}
+
+function biosolve4all_get_seo_title( $post_id, $is_en ) {
+  if ( is_search() ) {
+    $title = sprintf( 'Search results for "%s"', get_search_query() );
+  } elseif ( is_archive() ) {
+    $title = wp_strip_all_tags( get_the_archive_title() );
+  } elseif ( $post_id ) {
+    $title = get_the_title( $post_id );
+  } else {
+    $title = get_bloginfo( 'name' );
+  }
+
+  if ( $is_en && $post_id ) {
+    $translated_title = get_post_meta( $post_id, 'title_en', true );
+    if ( $translated_title ) {
+      $title = $translated_title;
+    } else {
+      $title = biosolve4all_translate_text( $title, 'EN-GB', 'PT', 'seo_title_' . $post_id );
+    }
+  }
+
+  return $title;
+}
+
+function biosolve4all_get_seo_description( $post_id, $is_en ) {
+  if ( is_front_page() ) {
+    return get_bloginfo( 'description' );
+  }
+
+  $description = '';
+  if ( $post_id ) {
+    $translated_excerpt = $is_en ? get_post_meta( $post_id, 'excerpt_en', true ) : '';
+    $translated_content = $is_en ? get_post_meta( $post_id, 'content_en', true ) : '';
+    $excerpt = get_the_excerpt( $post_id );
+    $content = get_post_field( 'post_content', $post_id );
+
+    if ( $translated_excerpt ) {
+      $description = $translated_excerpt;
+    } elseif ( $excerpt ) {
+      $description = $excerpt;
+    }
+
+    if ( ! $description ) {
+      $content_source = $translated_content ? $translated_content : $content;
+      $description = wp_trim_words( wp_strip_all_tags( $content_source ), 28 );
+    }
+
+    if ( $is_en && ! $translated_excerpt && ! $translated_content && $description ) {
+      $description = biosolve4all_translate_text( $description, 'EN-GB', 'PT', 'seo_desc_' . $post_id );
+    }
+  }
+
+  if ( ! $description ) {
+    $description = get_bloginfo( 'description' );
+  }
+
+  return $description;
+}
+
+function biosolve4all_get_seo_image_url( $post_id, $is_en ) {
+  if ( $post_id ) {
+    $translated_image = $is_en ? get_post_meta( $post_id, 'featured_image_en', true ) : '';
+    if ( $translated_image ) {
+      if ( is_numeric( $translated_image ) ) {
+        $translated_image_url = wp_get_attachment_image_url( (int) $translated_image, 'full' );
+        if ( $translated_image_url ) {
+          return $translated_image_url;
+        }
+      } else {
+        return $translated_image;
+      }
+    }
+
+    if ( has_post_thumbnail( $post_id ) ) {
+      $image_url = wp_get_attachment_image_url( get_post_thumbnail_id( $post_id ), 'full' );
+      if ( $image_url ) {
+        return $image_url;
+      }
+    }
+  }
+
+  return get_template_directory_uri() . '/assets/imgs/og-image.jpg';
+}
+
+function biosolve4all_output_seo_meta() {
+  $is_en = biosolve4all_is_en();
+  $post_id = is_singular() ? get_queried_object_id() : 0;
+
+  $title = biosolve4all_get_seo_title( $post_id, $is_en );
+  $description = biosolve4all_get_seo_description( $post_id, $is_en );
+  $image_url = biosolve4all_get_seo_image_url( $post_id, $is_en );
+  $current_url = biosolve4all_get_current_url();
+  $site_name = get_bloginfo( 'name' );
+  $type = is_singular( 'post' ) ? 'article' : 'website';
+  $locale = $is_en ? 'en_US' : 'pt_PT';
+
+  echo "\n" . '<link rel="canonical" href="' . esc_url( $current_url ) . '">' . "\n";
+  echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+  echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+  echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+  echo '<meta property="og:type" content="' . esc_attr( $type ) . '">' . "\n";
+  echo '<meta property="og:url" content="' . esc_url( $current_url ) . '">' . "\n";
+  echo '<meta property="og:image" content="' . esc_url( $image_url ) . '">' . "\n";
+  echo '<meta property="og:site_name" content="' . esc_attr( $site_name ) . '">' . "\n";
+  echo '<meta property="og:locale" content="' . esc_attr( $locale ) . '">' . "\n";
+  echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+  echo '<meta name="twitter:title" content="' . esc_attr( $title ) . '">' . "\n";
+  echo '<meta name="twitter:description" content="' . esc_attr( $description ) . '">' . "\n";
+  echo '<meta name="twitter:image" content="' . esc_url( $image_url ) . '">' . "\n";
+
+  if ( is_singular() ) {
+    $published = get_the_date( 'c', $post_id );
+    $modified = get_the_modified_date( 'c', $post_id );
+    if ( $published ) {
+      echo '<meta property="article:published_time" content="' . esc_attr( $published ) . '">' . "\n";
+    }
+    if ( $modified ) {
+      echo '<meta property="article:modified_time" content="' . esc_attr( $modified ) . '">' . "\n";
+    }
+  }
+}
+add_action( 'wp_head', 'biosolve4all_output_seo_meta', 1 );
+
 function biosolve4all_setup() {
   add_theme_support( 'title-tag' );
   add_theme_support( 'post-thumbnails' );
