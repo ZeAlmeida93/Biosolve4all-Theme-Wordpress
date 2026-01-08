@@ -79,7 +79,7 @@ get_header();
           <a class="post-footer__cta" href="<?php echo esc_url( $news_url ); ?>">
             <?php echo esc_html( $news_label ); ?>
           </a>
-          <button class="share-trigger" type="button" data-share-title="<?php echo esc_attr( $title_text ); ?>" aria-haspopup="dialog" aria-controls="share-modal">
+          <button class="share-trigger" type="button" data-share-title="<?php echo esc_attr( $title_text ); ?>" data-share-description="<?php echo esc_attr( $excerpt_text ); ?>" aria-haspopup="dialog" aria-controls="share-modal">
             <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
             <span><?php echo esc_html( $share_label ); ?></span>
           </button>

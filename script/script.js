@@ -572,6 +572,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const copyButton = modal.querySelector('[data-share-copy]');
     const shareLinks = modal.querySelectorAll('[data-share-link]');
     const shareTitle = trigger.dataset.shareTitle || document.title;
+    const shareDescription = trigger.dataset.shareDescription || '';
 
     const getShareUrl = () => window.location.href;
 
@@ -580,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const title = encodeURIComponent(shareTitle);
         const mappings = {
             facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-            linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+            linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}&summary=${encodeURIComponent(shareDescription)}`,
             x: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
             whatsapp: `https://wa.me/?text=${title}%20${url}`,
             email: `mailto:?subject=${title}&body=${url}`
