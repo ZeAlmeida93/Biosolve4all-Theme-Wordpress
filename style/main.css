@@ -2022,8 +2022,47 @@ header .nav-links .menu-icon {
   color: #1d2b2f;
   margin-top: 28px;
 }
+.post-body h2 {
+  font-size: 1.5rem;
+}
+.post-body h3 {
+  font-size: 1.25rem;
+}
+.post-body h4 {
+  font-size: 1.1rem;
+}
 .post-body p {
   margin: 0 0 18px;
+}
+.post-body strong,
+.post-body b {
+  font-weight: 700;
+}
+.post-body em,
+.post-body i {
+  font-style: italic;
+}
+.post-body u {
+  text-decoration: underline;
+}
+.post-body mark {
+  background-color: rgba(95, 184, 169, 0.2);
+  color: inherit;
+  padding: 0 0.15em;
+}
+.post-body ul,
+.post-body ol {
+  margin: 0 0 18px 1.5rem;
+  padding: 0;
+}
+.post-body ul {
+  list-style: disc;
+}
+.post-body ol {
+  list-style: decimal;
+}
+.post-body li + li {
+  margin-top: 8px;
 }
 
 .post-body p:first-child {
@@ -2043,6 +2082,35 @@ header .nav-links .menu-icon {
   max-width: 100%;
   height: auto;
   border-radius: 16px;
+}
+.post-body blockquote {
+  margin: 0 0 20px;
+  padding: 16px 20px;
+  border-left: 4px solid #5fb8a9;
+  background: rgba(95, 184, 169, 0.08);
+  border-radius: 12px;
+  color: #1d2b2f;
+}
+.post-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+.post-body pre {
+  margin: 0 0 20px;
+  padding: 16px 18px;
+  background: #f2f6f6;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+.post-body code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.95em;
+  background: #f2f6f6;
+  padding: 0.15em 0.35em;
+  border-radius: 6px;
+}
+.post-body pre code {
+  background: transparent;
+  padding: 0;
 }
 .post-footer {
   margin-top: 20px;
