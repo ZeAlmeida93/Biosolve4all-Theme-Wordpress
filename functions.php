@@ -144,6 +144,15 @@ function biosolve4all_get_seo_description( $post_id, $is_en ) {
     $description = get_bloginfo( 'description' );
   }
 
+  $description = wp_strip_all_tags( $description );
+  $description = preg_replace( '/\s+/', ' ', $description );
+  $description = trim( $description );
+  if ( function_exists( 'mb_substr' ) ) {
+    $description = mb_substr( $description, 0, 160 );
+  } else {
+    $description = substr( $description, 0, 160 );
+  }
+
   return $description;
 }
 
@@ -191,6 +200,7 @@ function biosolve4all_output_seo_meta() {
   echo '<meta property="og:type" content="' . esc_attr( $type ) . '">' . "\n";
   echo '<meta property="og:url" content="' . esc_url( $current_url ) . '">' . "\n";
   echo '<meta property="og:image" content="' . esc_url( $image_url ) . '">' . "\n";
+  echo '<meta property="og:image:alt" content="' . esc_attr( $title ) . '">' . "\n";
   echo '<meta property="og:site_name" content="' . esc_attr( $site_name ) . '">' . "\n";
   echo '<meta property="og:locale" content="' . esc_attr( $locale ) . '">' . "\n";
   echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
