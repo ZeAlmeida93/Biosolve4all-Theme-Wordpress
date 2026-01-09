@@ -1949,9 +1949,16 @@ header .nav-links .menu-icon {
   gap: 20px;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
-  padding-left: 7.5rem;
-  padding-right: 7.5rem;
+  padding-left: 17.5rem;
+  padding-right: 17.5rem;
 
+}
+
+@media (max-width: 1168px) {
+  .single-post article {
+    padding-left: 7rem;
+    padding-right: 7rem;
+  }
 }
 
 @media (max-width: 768px) {
