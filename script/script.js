@@ -779,7 +779,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // ✅ Create a new Lottie element with fixes
                 const lottieElement = document.createElement("dotlottie-wc");
-                lottieElement.setAttribute("src", "https://lottie.host/5aee6ff8-7809-49ef-a5b0-c522d01e6bcd/FMizGjSp57.lottie");
+                const lottieSrc = lottieContainer.getAttribute("data-lottie-src") || "https://lottie.host/5aee6ff8-7809-49ef-a5b0-c522d01e6bcd/FMizGjSp57.lottie";
+                lottieElement.setAttribute("src", lottieSrc);
                 lottieElement.setAttribute("speed", "0.75");
                 lottieElement.setAttribute("style", "width: 100%; height: 100%; display: block;");
                 lottieElement.setAttribute("mode", "forward");

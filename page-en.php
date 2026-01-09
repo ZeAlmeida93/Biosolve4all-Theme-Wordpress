@@ -44,7 +44,7 @@ get_header();
 </div>
 <div class="graph">
 <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js" type="module"></script>
-<div class="lottie-container"></div> <!-- Placeholder for animation -->
+<div class="lottie-container" data-lottie-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/lottie-animations/en.lottie"></div> <!-- Placeholder for animation -->
 </div>
 </section><section class="container" id="spin-off">
 <div class="u-minho">
