@@ -43,7 +43,7 @@ get_header();
                 processing industry.</p>
 </div>
 <div class="graph">
-<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js" type="module"></script>
+<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js" type="module"></script>
 <div class="lottie-container"></div> <!-- Placeholder for animation -->
 </div>
 </section><section class="container" id="spin-off">
