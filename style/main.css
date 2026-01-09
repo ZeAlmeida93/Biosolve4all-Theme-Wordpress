@@ -1939,6 +1939,7 @@ header .nav-links .menu-icon {
 .single-post {
 
   font-family: "Poppins", sans-serif;
+  padding-top: 0px;
 }
 .single-post * {
   font-family: inherit;
