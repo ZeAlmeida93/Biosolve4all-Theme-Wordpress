@@ -282,6 +282,78 @@ function biosolve4all_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'biosolve4all_enqueue_assets' );
 
+function biosolve4all_handle_contact_form() {
+  check_ajax_referer( 'biosolve_contact', 'nonce' );
+
+  $first_name = isset( $_POST['firstName'] ) ? sanitize_text_field( wp_unslash( $_POST['firstName'] ) ) : '';
+  $last_name = isset( $_POST['lastName'] ) ? sanitize_text_field( wp_unslash( $_POST['lastName'] ) ) : '';
+  $email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+  $phone = isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '';
+  $message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
+
+  if ( ! $first_name || ! $last_name || ! $email || ! $message ) {
+    wp_send_json_error( __( 'Please fill in all required fields.', 'biosolve4all' ) );
+  }
+
+  $api_key = defined( 'BIOSOLVE_BREVO_API_KEY' ) ? BIOSOLVE_BREVO_API_KEY : '';
+  if ( ! $api_key ) {
+    wp_send_json_error( __( 'Brevo API key is not configured.', 'biosolve4all' ) );
+  }
+
+  $cleaned_phone = preg_replace( '/[^0-9+]/', '', $phone );
+  if ( $cleaned_phone && strpos( $cleaned_phone, '+' ) !== 0 ) {
+    $cleaned_phone = '+351' . $cleaned_phone;
+  }
+
+  $attributes = array(
+    'NOME' => $first_name,
+    'SOBRENOME' => $last_name,
+    'MENSAGEM' => $message,
+  );
+  if ( $cleaned_phone ) {
+    $attributes['SMS'] = $cleaned_phone;
+  }
+
+  $list_id = defined( 'BIOSOLVE_BREVO_LIST_ID' ) ? (int) BIOSOLVE_BREVO_LIST_ID : 6;
+
+  $payload = array(
+    'email' => $email,
+    'attributes' => $attributes,
+    'listIds' => array( $list_id ),
+    'updateEnabled' => true,
+  );
+
+  $response = wp_remote_post(
+    'https://api.brevo.com/v3/contacts',
+    array(
+      'headers' => array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'api-key' => $api_key,
+      ),
+      'body' => wp_json_encode( $payload ),
+      'timeout' => 15,
+    )
+  );
+
+  if ( is_wp_error( $response ) ) {
+    wp_send_json_error( $response->get_error_message() );
+  }
+
+  $status_code = wp_remote_retrieve_response_code( $response );
+  $body = wp_remote_retrieve_body( $response );
+  $result = $body ? json_decode( $body, true ) : array();
+
+  if ( $status_code >= 200 && $status_code < 300 ) {
+    wp_send_json_success();
+  }
+
+  $message = is_array( $result ) && isset( $result['message'] ) ? $result['message'] : __( 'Unexpected response from Brevo.', 'biosolve4all' );
+  wp_send_json_error( $message );
+}
+add_action( 'wp_ajax_biosolve_contact', 'biosolve4all_handle_contact_form' );
+add_action( 'wp_ajax_nopriv_biosolve_contact', 'biosolve4all_handle_contact_form' );
+
 function biosolve4all_add_news_rewrite() {
   add_rewrite_rule( '^en/noticias/?$', 'index.php?pagename=noticias', 'top' );
 }

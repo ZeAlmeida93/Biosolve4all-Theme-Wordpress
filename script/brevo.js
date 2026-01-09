@@ -1,44 +1,51 @@
 
-    document.getElementById("contact-form").addEventListener("submit", async function (event) {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+    const contactForm = document.getElementById("contact-form");
+    if (!contactForm) {
+        return;
+    }
 
-    let formData = {
-        "email": document.getElementById("email").value,
-        "attributes": {
-            "NOME": document.getElementById("firstName").value,
-            "SOBRENOME": document.getElementById("lastName").value,
-            "SMS": document.getElementById("phone").value,
-            "MENSAGEM": document.getElementById("message").value
-        },
-        "listIds": [6], // Substitua 6 pelo ID correto da sua lista
-        "updateEnabled": true // Atualiza o contato se já existir
-    };
+    contactForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-    let responseMessage = document.getElementById("response-message");
+        const config = window.BIOSOLVE_CONTACT || {};
+        const responseMessage = document.getElementById("response-message");
+        if (!config.ajaxUrl || !config.nonce || !responseMessage) {
+            return;
+        }
 
-    try {
-        let response = await fetch("https://api.brevo.com/v3/contacts", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "api-key":"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"
-            },
-            body: JSON.stringify(formData)
+        const payload = new URLSearchParams({
+            action: "biosolve_contact",
+            nonce: config.nonce,
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            message: document.getElementById("message").value
         });
 
-        let result = await response.json();
+        try {
+            const response = await fetch(config.ajaxUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: payload
+            });
+            const result = await response.json();
 
-        if (response.ok) {
-            responseMessage.innerText = "Mensagem enviada com sucesso!";
-            responseMessage.style.color = "green";
-        } else {
-            responseMessage.innerText = "Erro ao conectar com o servidor. " + (result.message || "");
+            if (result && result.success) {
+                responseMessage.innerText = config.successMessage || "Mensagem enviada com sucesso!";
+                responseMessage.style.color = "green";
+                contactForm.reset();
+            } else {
+                const apiMessage = result && result.data ? result.data : "";
+                responseMessage.innerText = (config.errorServerMessage || "Erro ao conectar com o servidor. ") + apiMessage;
+                responseMessage.style.color = "red";
+            }
+        } catch (error) {
+            responseMessage.innerText = config.errorMessage || "Erro ao conectar com o servidor.";
             responseMessage.style.color = "red";
         }
-    } catch (error) {
-        responseMessage.innerText = "Erro ao conectar com o servidor.";
-        responseMessage.style.color = "red";
-    }
+    });
 });
-

@@ -91,62 +91,13 @@
   </script>
 <script defer="" src="https://sibforms.com/forms/end-form/build/main.js"></script>
 <script>
-   const contactForm = document.getElementById("contact-form");
-   if (contactForm) {
-   contactForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-
-    let phoneInput = document.getElementById("phone").value.trim();
-
-    // Remove all non-numeric characters except "+"
-    let cleanedPhone = phoneInput.replace(/[^0-9+]/g, "");
-
-    // Ensure it includes the country code
-    if (!cleanedPhone.startsWith("+")) {
-        cleanedPhone = "+351" + cleanedPhone; // Defaults to Portugal if missing
-    }
-
-    let formData = {
-        "email": document.getElementById("email").value,
-        "attributes": {
-            "NOME": document.getElementById("firstName").value,
-            "SOBRENOME": document.getElementById("lastName").value,
-            "SMS": cleanedPhone, // Now formatted correctly
-            "MENSAGEM": document.getElementById("message").value
-        },
-        "listIds": [6], // Substitua 6 pelo ID correto da sua lista
-        "updateEnabled": true // Atualiza o contato se já existir
-    };
-
-    let responseMessage = document.getElementById("response-message");
-
-    try {
-        let response = await fetch("https://api.brevo.com/v3/contacts", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "api-key": "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"
-            },
-            body: JSON.stringify(formData)
-        });
-
-        let result = await response.json();
-
-        if (response.ok) {
-            responseMessage.innerText = "<?php echo esc_js( $contact_success ); ?>";
-            responseMessage.style.color = "green";
-        } else {
-            responseMessage.innerText = "<?php echo esc_js( $contact_error_server ); ?>" + (result.message || "");
-            responseMessage.style.color = "red";
-        }
-    } catch (error) {
-        responseMessage.innerText = "<?php echo esc_js( $contact_error_general ); ?>";
-        responseMessage.style.color = "red";
-    }
-});
-}
-
+  window.BIOSOLVE_CONTACT = {
+    ajaxUrl: "<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>",
+    nonce: "<?php echo esc_js( wp_create_nonce( 'biosolve_contact' ) ); ?>",
+    successMessage: "<?php echo esc_js( $contact_success ); ?>",
+    errorMessage: "<?php echo esc_js( $contact_error_general ); ?>",
+    errorServerMessage: "<?php echo esc_js( $contact_error_server ); ?>"
+  };
 </script>
 <script type="text/javascript">
   _linkedin_partner_id = "8191113";
