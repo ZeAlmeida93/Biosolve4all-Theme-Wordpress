@@ -2288,4 +2288,11 @@ body.share-modal-open {
     border-radius: 18px;
   }
 }
+
+
+@media (max-width: 390px) {
+  .post-hero {
+    padding-top: 2rem;
+  }
+}
 /*# sourceMappingURL=main.css.map */
