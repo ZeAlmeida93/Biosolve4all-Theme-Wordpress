@@ -1932,7 +1932,13 @@ header .nav-links .menu-icon {
     padding: 12px 0 0;
   }
   .news-page {
-    padding-top: 100px;
+    padding-top: 0px;
+  }
+
+  .post-hero {
+
+    padding-top: 0rem;
+
   }
 }
 
