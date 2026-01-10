@@ -24,6 +24,26 @@ function biosolve4all_is_en() {
   return biosolve4all_get_lang() === 'en';
 }
 
+function biosolve4all_get_localized_date( $post_id = 0, $format = '' ) {
+  $lang = biosolve4all_get_lang();
+  $locale = $lang === 'en' ? 'en_US' : 'pt_PT';
+  $format = $format ? $format : get_option( 'date_format' );
+  $timestamp = get_post_time( 'U', false, $post_id );
+
+  $switched = false;
+  if ( function_exists( 'switch_to_locale' ) ) {
+    $switched = switch_to_locale( $locale );
+  }
+
+  $date = wp_date( $format, $timestamp );
+
+  if ( $switched ) {
+    restore_previous_locale();
+  }
+
+  return $date;
+}
+
 function biosolve4all_get_language_switcher_urls() {
   $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '/';
   $path = wp_parse_url( $request_uri, PHP_URL_PATH );

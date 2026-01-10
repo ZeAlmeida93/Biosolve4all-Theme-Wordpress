@@ -70,7 +70,7 @@ $query = new WP_Query( $query_args );
               <div class="news-card__image news-card__image--placeholder"></div>
             <?php endif; ?>
             <div class="news-card__body">
-              <p class="news-card__meta"><?php echo esc_html( get_the_date() ); ?></p>
+              <p class="news-card__meta"><?php echo esc_html( biosolve4all_get_localized_date( $post_id ) ); ?></p>
               <h2 class="news-card__title"><?php echo esc_html( $title_text ); ?></h2>
               <p class="news-card__excerpt"><?php echo esc_html( wp_trim_words( $excerpt_text, 24 ) ); ?></p>
               <span class="news-card__cta"><?php echo esc_html( $read_more ); ?></span>

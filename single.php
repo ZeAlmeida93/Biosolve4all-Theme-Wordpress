@@ -49,7 +49,7 @@ get_header();
       <header class="post-hero">
         <div class="post-hero__row">
           <h1 class="post-hero__title"><?php echo esc_html( $title_text ); ?></h1>
-          <p class="post-hero__date"><?php echo esc_html( get_the_date() ); ?></p>
+          <p class="post-hero__date"><?php echo esc_html( biosolve4all_get_localized_date( $post_id ) ); ?></p>
         </div>
         <?php if ( $excerpt_text ) : ?>
           <p class="post-hero__subtitle"><?php echo esc_html( $excerpt_text ); ?></p>

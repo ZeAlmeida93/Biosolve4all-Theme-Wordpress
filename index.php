@@ -13,7 +13,7 @@ get_header();
           <h2 style="margin-bottom: 6px;">
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
           </h2>
-          <p style="opacity:.75; margin-bottom: 10px;"><?php echo esc_html( get_the_date() ); ?></p>
+          <p style="opacity:.75; margin-bottom: 10px;"><?php echo esc_html( biosolve4all_get_localized_date() ); ?></p>
           <div><?php the_excerpt(); ?></div>
         </article>
       <?php endwhile; ?>
