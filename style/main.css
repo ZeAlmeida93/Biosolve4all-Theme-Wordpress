@@ -1935,7 +1935,7 @@ header .nav-links .menu-icon {
     padding-top: 0px;
   }
 
-  header .post-hero {
+   .single-post {
 
     padding-top: 0rem;
 
@@ -2282,7 +2282,7 @@ body.share-modal-open {
 }
 @media (max-width: 640px) {
   .single-post {
-    padding-top: 100px;
+    padding-top: 0px;
   }
   .post-hero__image {
     border-radius: 18px;
