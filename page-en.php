@@ -152,8 +152,8 @@ $news_url = $lang === 'en' ? home_url( '/en/noticias/' ) : home_url( '/noticias/
 </div>
 </section><section class="container" id="processo">
 <video autoplay="" id="processVideo" loop="" muted="" playsinline="" preload="auto">
-<source autoplay="" loop="" media="(min-width: 760px)" muted="" playsinline="" preload="auto" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/videos/animation2.mp4" type="video/mp4"/>
-<source autoplay="" loop="" media="(max-width: 759px)" muted="" playsinline="" preload="auto" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/videos/animation2.mp4" type="video/mp4"/>
+<source autoplay="" loop="" media="(min-width: 760px)" muted="" playsinline="" preload="auto" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/videos/animation_en.mp4" type="video/mp4"/>
+<source autoplay="" loop="" media="(max-width: 759px)" muted="" playsinline="" preload="auto" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/videos/animation_en.mp4" type="video/mp4"/>
 </video>
 </section><section class="container" id="equipa">
 <h3>The Team</h3>
