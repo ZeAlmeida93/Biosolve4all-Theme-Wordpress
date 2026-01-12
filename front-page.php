@@ -299,22 +299,6 @@ $news_url = $lang === 'en' ? home_url( '/en/noticias/' ) : home_url( '/noticias/
 <p id="response-message"></p>
 </div>
 </div>
-</section><div class="modal">
-<div class="modal-content">
-<ul>
-<li><a href="#servicos">Quem Somos</a></li>
-<li><a href="#solutions">Serviços</a></li>
-<li> <a href="#especialidades">Diferenciação</a></li>
-<li><a href="#processo">Processo</a></li>
-<li><a href="#equipa">Equipa</a></li>
-<li><a href="#parceiros">Parceiros &amp; Clientes</a></li>
-<li><a href="<?php echo esc_url( $news_url ); ?>">Notícias</a></li>
-<li><a href="#contactos">Contactos</a></li>
-<div>
-<a id="mobile-newsletter-menu-overlay">Newsletter</a>
-</div>
-</ul>
-</div>
-</div>
+</section>
 
 <?php get_footer(); ?>

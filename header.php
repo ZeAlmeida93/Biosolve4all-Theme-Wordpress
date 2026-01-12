@@ -120,6 +120,23 @@
 </div>
 </div>
 </nav>
+<div class="modal">
+  <div class="modal-content">
+    <ul>
+      <?php foreach ( $nav_items as $nav_item ) : ?>
+        <?php
+          $nav_url = isset( $nav_item['url'] )
+            ? $nav_item['url']
+            : trailingslashit( $home_anchor_base ) . '#' . $nav_item['anchor'];
+        ?>
+        <li><a href="<?php echo esc_url( $nav_url ); ?>"><?php echo esc_html( $nav_item['label'] ); ?></a></li>
+      <?php endforeach; ?>
+      <div>
+        <a id="mobile-newsletter-menu-overlay">Newsletter</a>
+      </div>
+    </ul>
+  </div>
+</div>
 <!--div class="mobile-menu-container">
             <ul class="nav-links">
               <li><a href="<?php echo esc_url( home_url('/#servicos') ); ?>">Quem Somos</a></li>
