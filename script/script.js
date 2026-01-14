@@ -729,12 +729,25 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
+    function getThemeAssetPath(path) {
+        var base = window.BIOSOLVE_THEME_URI;
+        if (!base && document.body) {
+            base = document.body.getAttribute("data-theme-uri") || "";
+        }
+        return base ? base.replace(/\/$/, "") + "/" + path.replace(/^\//, "") : path;
+    }
+
+    if (!window.lottie) {
+        window.addEventListener("load", arguments.callee);
+        return;
+    }
+
     var animation = lottie.loadAnimation({
         container: lottieContainer, // The div where it will render
         renderer: "svg", // 'svg' provides better quality
         loop: false, // Play only once
         autoplay: false, // Don't play immediately
-        path: "assets/lottie-animations/news-green.json" // Path to your JSON file
+        path: getThemeAssetPath("assets/lottie-animations/news-green.json") // Path to your JSON file
     });
 
     // Function to check if the div is in the viewport
@@ -765,12 +778,25 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
+    function getThemeAssetPath(path) {
+        var base = window.BIOSOLVE_THEME_URI;
+        if (!base && document.body) {
+            base = document.body.getAttribute("data-theme-uri") || "";
+        }
+        return base ? base.replace(/\/$/, "") + "/" + path.replace(/^\//, "") : path;
+    }
+
+    if (!window.lottie) {
+        window.addEventListener("load", arguments.callee);
+        return;
+    }
+
     lottie.loadAnimation({
         container: lottieContainer,
         renderer: "svg",
         loop: true,
         autoplay: true,
-        path: "assets/lottie-animations/news-green.json"
+        path: getThemeAssetPath("assets/lottie-animations/news-green.json")
     });
 });
 
@@ -782,13 +808,26 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    if (window.lottie && lottieContainer) {
+    function getThemeAssetPath(path) {
+        var base = window.BIOSOLVE_THEME_URI;
+        if (!base && document.body) {
+            base = document.body.getAttribute("data-theme-uri") || "";
+        }
+        return base ? base.replace(/\/$/, "") + "/" + path.replace(/^\//, "") : path;
+    }
+
+    if (!window.lottie) {
+        window.addEventListener("load", arguments.callee);
+        return;
+    }
+
+    if (lottieContainer) {
         lottie.loadAnimation({
             container: lottieContainer,
             renderer: "svg",
             loop: true,
             autoplay: true,
-            path: "assets/lottie-animations/news-green.json"
+            path: getThemeAssetPath("assets/lottie-animations/news-green.json")
         });
     }
 

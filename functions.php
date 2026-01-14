@@ -104,6 +104,14 @@ function biosolve4all_language_attributes( $output ) {
 }
 add_filter( 'language_attributes', 'biosolve4all_language_attributes' );
 
+function biosolve4all_module_script_tag( $tag, $handle, $src ) {
+  if ( $handle === 'biosolve-dotlottie' ) {
+    return '<script type="module" src="' . esc_url( $src ) . '"></script>';
+  }
+  return $tag;
+}
+add_filter( 'script_loader_tag', 'biosolve4all_module_script_tag', 10, 3 );
+
 function biosolve4all_get_current_url() {
   $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '/';
   return home_url( $request_uri );

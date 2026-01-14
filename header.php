@@ -47,9 +47,12 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script>
+          window.BIOSOLVE_THEME_URI = "<?php echo esc_js( get_template_directory_uri() ); ?>";
+        </script>
     <?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> data-theme-uri="<?php echo esc_url( get_template_directory_uri() ); ?>">
 <?php wp_body_open(); ?>
 <div class="site-loader" id="site-loader" aria-live="polite" aria-busy="true">
   <div class="site-loader__inner">
