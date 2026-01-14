@@ -78,7 +78,7 @@
 </svg>
 </i>
 </a>
-<a class="footer__privacy" href="https://biosolve4all.com/wp-content/uploads/2025/policies/privacy-policy.pdf" target="_blank"><?php echo esc_html( $privacy_label ); ?></a>
+<a class="footer__privacy" href="https://biosolve4all.com/wp-content/uploads/2026/01/Politica-Privacidade-Bio_REV_11_11_2024.pdf" target="_blank"><?php echo esc_html( $privacy_label ); ?></a>
 <span>©BioSolve4All</span>
 </div>
 </footer>
