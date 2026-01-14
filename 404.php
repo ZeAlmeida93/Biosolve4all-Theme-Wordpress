@@ -1,9 +1,10 @@
 <?php
 get_header();
 ?>
-<main class="container" style="padding-top: 120px; padding-bottom: 80px;">
-  <h1>Página não encontrada</h1>
-  <p>Ou foi apagada, ou nunca existiu. Humanos e URLs têm muito em comum.</p>
-  <p><a href="<?php echo esc_url( home_url('/') ); ?>">Voltar à homepage</a></p>
+<main class="container not-found-page">
+  <div class="not-found__animation" id="lottie-404" aria-hidden="true"></div>
+  <h1>This page does not exist or it has been moved</h1>
+  <p class="not-found__subtitle">Try returning to the homepage or use the menu to find what you need.</p>
+  <a class="not-found__button" href="<?php echo esc_url( home_url( '/' ) ); ?>">Go back to homepage</a>
 </main>
 <?php get_footer(); ?>

@@ -725,6 +725,10 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     var lottieContainer = document.getElementById("lottie-news");
 
+    if (!lottieContainer) {
+        return;
+    }
+
     var animation = lottie.loadAnimation({
         container: lottieContainer, // The div where it will render
         renderer: "svg", // 'svg' provides better quality
@@ -752,6 +756,62 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     observer.observe(lottieContainer); // Start observing the Lottie div
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    var lottieContainer = document.getElementById("lottie-404");
+
+    if (!lottieContainer) {
+        return;
+    }
+
+    lottie.loadAnimation({
+        container: lottieContainer,
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: "assets/lottie-animations/news-green.json"
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    var loader = document.getElementById("site-loader");
+    var lottieContainer = document.getElementById("site-loader-lottie");
+
+    if (!loader) {
+        return;
+    }
+
+    if (window.lottie && lottieContainer) {
+        lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            path: "assets/lottie-animations/news-green.json"
+        });
+    }
+
+    var hasSeen = false;
+    try {
+        hasSeen = window.localStorage && localStorage.getItem("biosolveLoaderSeen");
+    } catch (e) {
+        hasSeen = false;
+    }
+
+    if (hasSeen) {
+        loader.classList.add("is-hidden");
+        loader.setAttribute("aria-busy", "false");
+        return;
+    }
+
+    window.addEventListener("load", function () {
+        loader.classList.add("is-hidden");
+        loader.setAttribute("aria-busy", "false");
+        try {
+            localStorage.setItem("biosolveLoaderSeen", "1");
+        } catch (e) {}
+    });
 });
 
 

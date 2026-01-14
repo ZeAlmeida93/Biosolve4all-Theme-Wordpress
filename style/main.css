@@ -1920,6 +1920,89 @@ header .nav-links .menu-icon {
   border-color: #7fbdb5;
   color: #f6fbfa;
 }
+.site-loader {
+  position: fixed;
+  inset: 0;
+  background: #f6fbfa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.site-loader__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  font-family: "Poppins", sans-serif;
+  color: #33617a;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.site-loader__lottie {
+  width: 160px;
+  height: 160px;
+}
+.site-loader__text {
+  font-size: 0.85rem;
+}
+.site-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+html.loader-seen .site-loader {
+  display: none;
+}
+
+.not-found-page {
+  padding-top: 140px;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  font-family: "Poppins", sans-serif;
+}
+.not-found-page * {
+  font-family: inherit;
+}
+.not-found__animation {
+  width: 180px;
+  height: 180px;
+  max-width: 70vw;
+}
+.not-found-page h1 {
+  font-size: clamp(1.75rem, 1.3214rem + 1.8214vw, 3rem);
+  font-weight: 700;
+  color: #33617a;
+  max-width: 680px;
+}
+.not-found__subtitle {
+  font-size: clamp(0.95rem, 0.8357rem + 0.4857vw, 1.25rem);
+  color: #6b7b86;
+  max-width: 640px;
+  line-height: 1.5;
+}
+.not-found__button {
+  background-color: #5FB8A9;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.95rem;
+  color: #F6F6F6;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.not-found__button:hover {
+  background-color: #85CDDD;
+}
 @media (max-width: 980px) {
   .news-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1939,6 +2022,21 @@ header .nav-links .menu-icon {
 
     padding-top: 0rem;
 
+  }
+}
+
+@media (max-width: 640px) {
+  .not-found-page {
+    padding-top: 110px;
+    padding-bottom: 80px;
+  }
+  .not-found__animation {
+    width: 140px;
+    height: 140px;
+  }
+  .site-loader__lottie {
+    width: 120px;
+    height: 120px;
   }
 }
 

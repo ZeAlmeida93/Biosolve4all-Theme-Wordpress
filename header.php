@@ -7,6 +7,15 @@
     <meta content="yes" name="apple-mobile-web-app-capable"/>
         <script>
           (function () {
+            try {
+              if (window.localStorage && localStorage.getItem("biosolveLoaderSeen")) {
+                document.documentElement.classList.add("loader-seen");
+              }
+            } catch (e) {}
+          })();
+        </script>
+        <script>
+          (function () {
             var path = window.location.pathname || "/";
             var hasQueryLang = /(?:[?&]lang=)(en|pt)(?:&|$)/.test(window.location.search);
             var isEnPath = /^\/en(\/|$)/.test(path);
@@ -42,6 +51,12 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<div class="site-loader" id="site-loader" aria-live="polite" aria-busy="true">
+  <div class="site-loader__inner">
+    <div class="site-loader__lottie" id="site-loader-lottie" aria-hidden="true"></div>
+    <span class="site-loader__text">Loading</span>
+  </div>
+</div>
 
 <header>
 <nav class="container" id="navbar">
