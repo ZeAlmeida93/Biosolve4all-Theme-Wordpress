@@ -233,7 +233,8 @@ $news_url = $lang === 'en' ? home_url( '/en/noticias/' ) : home_url( '/noticias/
 <img alt="" onclick="location.href='https://besthealth4u.pt/'" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/BH4U.png"/>
 <img alt="" onclick="location.href='https://www.uminho.pt/'" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/UM.png"/>
 <img alt="" onclick="location.href='https://gaeb.pt/'" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/GAEB.png"/>
-<img alt="" onclick="location.href='https://www.healthportugal.com/en/'" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/HCP_partner.png"/>
+<img alt="" class="partner-hcp" onclick="location.href='https://www.healthportugal.com/en/'" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/HCP_partner.png"/>
+<img alt="" src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/sgd-partner.png"/>
 </div>
 <div class="carousel">
 <div class="carousel-cell">
@@ -250,6 +251,11 @@ $news_url = $lang === 'en' ? home_url( '/en/noticias/' ) : home_url( '/noticias/
 <p class="quote">"Your availability and knowledge sharing were essential to make this experience valuable for all participants. It was a privilege to get to know your work up close and learn from your experience."</p>
 <h3 class="name">Gabriela Barbosa</h3>
 <p class="title">GAEB</p>
+</div>
+<div class="carousel-cell">
+<p class="quote">"The company's professionals showed total commitment and availability in monitoring the tests and in discussing the results, acting as partners in defining the best strategy and carrying the project forward."</p>
+<h3 class="name">Isabel Ferreri</h3>
+<p class="title">R&amp;D Success Gadget</p>
 </div>
 </div>
 </section><section class="container" id="noticias">

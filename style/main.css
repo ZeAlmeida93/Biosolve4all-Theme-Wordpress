@@ -1226,6 +1226,7 @@ header .nav-links .menu-icon {
   display: flex;
   justify-content: center;
   gap: 0.625rem;
+  align-items: center;
 }
 #parceiros.container .partners-row img {
   width: 10%;
@@ -1237,7 +1238,7 @@ header .nav-links .menu-icon {
   #parceiros.container .partners-row img {
     width: 25%;
   }
-  #parceiros.container .partners-row img:last-child {
+  #parceiros.container .partners-row .partner-hcp {
     width: 25%;
     aspect-ratio: 16/13;
     -o-object-fit: cover;
