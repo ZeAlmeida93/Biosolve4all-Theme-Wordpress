@@ -911,6 +911,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const newsletterButton = document.getElementById("brevo-form-overlay");
     const nlPopup = document.getElementById("newsletter-pop-up"); // FIXED: Using ID instead of class
     const mobileNewsletterButton = document.getElementById("mobile-newsletter-menu-overlay");
+    const mobileMenu = document.querySelector('.mobile-menu-container .nav-links');
+    const mobileMenuCheckbox = document.querySelector('.mobile-menu .checkbox');
+    const mobileMenuLines = document.querySelectorAll('.mobile-menu .hamburger-lines .line');
+    const mobileMenuModal = document.querySelector('.modal');
 
     if (!nlPopup) {
         console.error("Element with ID 'newsletter-pop-up' not found.");
@@ -936,6 +940,19 @@ document.addEventListener("DOMContentLoaded", function () {
         nlPopup.classList.remove("active");
     }
 
+    function closeMobileMenu() {
+        if (mobileMenu) {
+            mobileMenu.classList.remove('active');
+        }
+        if (mobileMenuModal) {
+            mobileMenuModal.classList.remove('active');
+        }
+        mobileMenuLines.forEach(line => line.classList.remove('active'));
+        if (mobileMenuCheckbox) {
+            mobileMenuCheckbox.checked = false;
+        }
+    }
+
     // ✅ Open pop-up when clicking the button
     if (newsletterButton) {
         newsletterButton.addEventListener("click", function (event) {
@@ -950,6 +967,7 @@ document.addEventListener("DOMContentLoaded", function () {
        if (mobileNewsletterButton) {
         mobileNewsletterButton.addEventListener("click", function (event) {
             event.preventDefault();
+            closeMobileMenu();
             openPopup();
         });
     } else {

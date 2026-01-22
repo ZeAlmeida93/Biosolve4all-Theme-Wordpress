@@ -252,6 +252,7 @@ add_action( 'wp_head', 'biosolve4all_output_seo_meta', 1 );
 function biosolve4all_setup() {
   add_theme_support( 'title-tag' );
   add_theme_support( 'post-thumbnails' );
+  add_theme_support( 'site-icon' );
   add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
 
   register_nav_menus(
@@ -261,6 +262,22 @@ function biosolve4all_setup() {
   );
 }
 add_action( 'after_setup_theme', 'biosolve4all_setup' );
+
+function biosolve4all_output_hreflang_links() {
+  if ( ! function_exists( 'biosolve4all_get_language_switcher_urls' ) ) {
+    return;
+  }
+
+  $urls = biosolve4all_get_language_switcher_urls();
+  if ( empty( $urls['pt'] ) || empty( $urls['en'] ) ) {
+    return;
+  }
+
+  echo "\n" . '<link rel="alternate" hreflang="pt-PT" href="' . esc_url( $urls['pt'] ) . '">' . "\n";
+  echo '<link rel="alternate" hreflang="en" href="' . esc_url( $urls['en'] ) . '">' . "\n";
+  echo '<link rel="alternate" hreflang="x-default" href="' . esc_url( $urls['pt'] ) . '">' . "\n";
+}
+add_action( 'wp_head', 'biosolve4all_output_hreflang_links', 2 );
 
 function biosolve4all_security_headers() {
   header( 'X-Content-Type-Options: nosniff' );

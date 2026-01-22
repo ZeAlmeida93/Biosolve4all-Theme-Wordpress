@@ -19,7 +19,12 @@
             var path = window.location.pathname || "/";
             var hasQueryLang = /(?:[?&]lang=)(en|pt)(?:&|$)/.test(window.location.search);
             var isEnPath = /^\/en(\/|$)/.test(path);
+            var userAgent = (navigator.userAgent || "").toLowerCase();
+            var isBot = /(bot|crawler|spider|crawling|googlebot|bingbot|duckduckbot|baiduspider|yandex|slurp|facebookexternalhit|twitterbot|linkedinbot|whatsapp|telegrambot)/i.test(userAgent);
             if (hasQueryLang || isEnPath) {
+              return;
+            }
+            if (isBot) {
               return;
             }
 
@@ -39,7 +44,12 @@
             }
           })();
         </script>
-        <link href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/favicon.png" rel="icon" type="image/png"/>
+        <?php if ( ! ( function_exists( 'has_site_icon' ) && has_site_icon() ) ) : ?>
+        <link href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/favicon.png" rel="icon" type="image/png" sizes="28x28"/>
+        <link href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/favicon.png" rel="shortcut icon" type="image/png"/>
+        <link href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/favicon.png" rel="apple-touch-icon"/>
+        <meta name="msapplication-TileImage" content="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/imgs/favicon.png"/>
+        <?php endif; ?>
         <link href="https://fonts.googleapis.com" rel="preconnect"/>
         <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
         <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
