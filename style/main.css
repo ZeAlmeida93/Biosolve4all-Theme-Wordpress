@@ -1208,7 +1208,7 @@ header .nav-links .menu-icon {
 
 #parceiros.container {
   display: flex;
-    scroll-margin-top: 140px;
+    scroll-margin-top: 100px;
   flex-direction: column;
   justify-content: center;
 }
